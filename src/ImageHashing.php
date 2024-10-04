@@ -41,13 +41,13 @@ class ImageHashing implements Hashing
         return $hash;
     }
 
-    function phash($imagePath): string
+    public function phash(string $imagePath): string
     {
         // Step 1: Load the image
         $img = imagecreatefromstring(file_get_contents($imagePath));
 
         // Step 2: Resize the image to 8x8
-        $resizedImg = imagecreatetruecolor(8, 8);
+        $resizedImg = imagecreatetruecolor(32, 32);
         imagecopyresampled($resizedImg, $img, 0, 0, 0, 0, 8, 8, imagesx($img), imagesy($img));
 
         // Step 3: Convert the image to grayscale and calculate average value
@@ -78,7 +78,10 @@ class ImageHashing implements Hashing
         }
 
         // Step 6: Convert to hexadecimal
-        $hashHex = strtoupper(bindec(($hashBits)));
+        $hashHex = '';
+        for ($i = 0; $i < 64; $i += 4) {
+            $hashHex .= dechex(bindec(substr($hashBits, $i, 4)));
+        }
 
         // Clean up
         imagedestroy($img);
@@ -101,6 +104,7 @@ class ImageHashing implements Hashing
         }
         return $distance;
     }
+
     function PhammingDistance($hash1, $hash2): int
     {
         // Ensure both hashes are of the same length

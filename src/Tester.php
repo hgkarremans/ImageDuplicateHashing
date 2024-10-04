@@ -23,12 +23,12 @@ class Tester
     /**
      * @throws \Exception
      */
-    public function hDammingDistance(string $hash1, string $hash2): int
+    public function DhammingDistance(string $hash1, string $hash2): int
     {
         return $this->hashing->DhammingDistance($hash1, $hash2);
     }
 
-    public function hPhammingDistance(string $hash1, string $hash2): int
+    public function PhammingDistance(string $hash1, string $hash2): int
     {
         return $this->hashing->PhammingDistance($hash1, $hash2);
     }
