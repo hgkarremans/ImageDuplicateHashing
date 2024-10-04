@@ -11,16 +11,25 @@ class Tester
         $this->hashing = new ImageHashing();
     }
 
-    public function generateHash(string $imagePath): string
+    public function generateDHash(string $imagePath): string
     {
         return $this->hashing->hash($imagePath);
+    }
+    public function generatePHash(string $imagePath): string
+    {
+        return $this->hashing->phash($imagePath);
     }
 
     /**
      * @throws \Exception
      */
-    public function hammingDistance(string $hash1, string $hash2): int
+    public function hDammingDistance(string $hash1, string $hash2): int
     {
-        return $this->hashing->hammingDistance($hash1, $hash2);
+        return $this->hashing->DhammingDistance($hash1, $hash2);
+    }
+
+    public function hPhammingDistance(string $hash1, string $hash2): int
+    {
+        return $this->hashing->PhammingDistance($hash1, $hash2);
     }
 }

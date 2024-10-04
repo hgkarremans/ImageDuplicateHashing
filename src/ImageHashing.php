@@ -3,6 +3,7 @@
 namespace App;
 
 use Exception;
+use InvalidArgumentException;
 
 class ImageHashing implements Hashing
 {
@@ -40,7 +41,53 @@ class ImageHashing implements Hashing
         return $hash;
     }
 
-    public function hammingDistance(string $hash1, string $hash2): int
+    function phash($imagePath): string
+    {
+        // Step 1: Load the image
+        $img = imagecreatefromstring(file_get_contents($imagePath));
+
+        // Step 2: Resize the image to 8x8
+        $resizedImg = imagecreatetruecolor(8, 8);
+        imagecopyresampled($resizedImg, $img, 0, 0, 0, 0, 8, 8, imagesx($img), imagesy($img));
+
+        // Step 3: Convert the image to grayscale and calculate average value
+        $grayValues = [];
+        $total = 0;
+
+        for ($y = 0; $y < 8; $y++) {
+            for ($x = 0; $x < 8; $x++) {
+                $rgb = imagecolorat($resizedImg, $x, $y);
+                $r = ($rgb >> 16) & 0xFF;
+                $g = ($rgb >> 8) & 0xFF;
+                $b = $rgb & 0xFF;
+
+                // Calculate grayscale value
+                $gray = (0.299 * $r + 0.587 * $g + 0.114 * $b);
+                $grayValues[] = $gray;
+                $total += $gray;
+            }
+        }
+
+        // Step 4: Calculate the average value
+        $average = $total / 64;
+
+        // Step 5: Create the hash
+        $hashBits = '';
+        foreach ($grayValues as $gray) {
+            $hashBits .= ($gray > $average) ? '1' : '0';
+        }
+
+        // Step 6: Convert to hexadecimal
+        $hashHex = strtoupper(bindec(($hashBits)));
+
+        // Clean up
+        imagedestroy($img);
+        imagedestroy($resizedImg);
+
+        return $hashHex;
+    }
+
+    public function DhammingDistance(string $hash1, string $hash2): int
     {
         if (strlen($hash1) !== strlen($hash2)) {
             throw new Exception('Hash lengths must be equal.');
@@ -52,6 +99,25 @@ class ImageHashing implements Hashing
                 $distance++;
             }
         }
+        return $distance;
+    }
+    function PhammingDistance($hash1, $hash2): int
+    {
+        // Ensure both hashes are of the same length
+        if (strlen($hash1) !== strlen($hash2)) {
+            throw new InvalidArgumentException("Hashes must be of the same length.");
+        }
+
+        // Initialize the distance counter
+        $distance = 0;
+
+        // Calculate the Hamming distance
+        for ($i = 0; $i < strlen($hash1); $i++) {
+            if ($hash1[$i] !== $hash2[$i]) {
+                $distance++;
+            }
+        }
+
         return $distance;
     }
 }
