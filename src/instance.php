@@ -26,7 +26,6 @@ $hashColorDifferentD = $tester->generateDHash('../assets/RandomHouse_different_c
 $hashWatermarkD = $tester->generateDHash('../assets/randomhouse_watermark.png');
 $hashPikachuD = $tester->generateDHash('../assets/pikachu.jpeg');
 
-//difference between perplecual hashing
 try {
     $noDifference = $tester->PhammingDistance($hash, $hash);
     $differenceSmall = $tester->PhammingDistance($hash, $hash2);
@@ -39,7 +38,6 @@ try {
 } catch (Exception $e) {
     echo $e->getMessage();
 }
-//difference between difference hashing
 try {
     $noDifferenceD = $tester->DhammingDistance($hashD, $hashD);
     $differenceSmallD = $tester->DhammingDistance($hashD, $hash2D);
