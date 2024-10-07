@@ -76,7 +76,7 @@ class ImageHashing implements Hashing
         return $hashHex;
     }
 
-    public function DhammingDistance(string $hash1, string $hash2): int
+    public function hammingDistance(string $hash1, string $hash2): int
     {
         if (strlen($hash1) !== strlen($hash2)) {
             throw new Exception('Hash lengths must be equal.');
@@ -91,20 +91,4 @@ class ImageHashing implements Hashing
         return $distance;
     }
 
-    function PhammingDistance($hash1, $hash2): int
-    {
-        if (strlen($hash1) !== strlen($hash2)) {
-            throw new InvalidArgumentException("Hashes must be of the same length.");
-        }
-
-        $distance = 0;
-
-        for ($i = 0; $i < strlen($hash1); $i++) {
-            if ($hash1[$i] !== $hash2[$i]) {
-                $distance++;
-            }
-        }
-
-        return $distance;
-    }
 }
