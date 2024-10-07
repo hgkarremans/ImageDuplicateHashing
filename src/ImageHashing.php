@@ -13,6 +13,7 @@ class ImageHashing implements Hashing
         $size = 8;
         $image = imagecreatefromstring(file_get_contents($imagePath));
 
+        //resizing to 9x8
         $resizedImage = imagecreatetruecolor($size + 1, $size);
 
         imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $size + 1, $size, imagesx($image), imagesy($image));
@@ -25,7 +26,8 @@ class ImageHashing implements Hashing
 
                 $leftGray = ($leftColor >> 16) & 0xFF;
                 $rightGray = ($rightColor >> 16) & 0xFF;
-
+                //if grayscale version of left pixel is less than right pixel,
+                // add 1 to hash, else add 0
                 $hash .= ($leftGray < $rightGray) ? '1' : '0';
 
             }
@@ -39,12 +41,13 @@ class ImageHashing implements Hashing
     {
         $img = imagecreatefromstring(file_get_contents($imagePath));
 
+        //resizing to 32x32
         $resizedImg = imagecreatetruecolor(32, 32);
         imagecopyresampled($resizedImg, $img, 0, 0, 0, 0, 8, 8, imagesx($img), imagesy($img));
 
         $grayValues = [];
         $total = 0;
-
+        //calculating average grayscale value
         for ($y = 0; $y < 8; $y++) {
             for ($x = 0; $x < 8; $x++) {
                 $rgb = imagecolorat($resizedImg, $x, $y);
@@ -59,12 +62,12 @@ class ImageHashing implements Hashing
         }
 
         $average = $total / 64;
-
+        //if grayscale value is greater than average, add 1 to hash, else add 0
         $hashBits = '';
         foreach ($grayValues as $gray) {
             $hashBits .= ($gray > $average) ? '1' : '0';
         }
-
+        //convert binary hash to hexadecimal
         $hashHex = '';
         for ($i = 0; $i < 64; $i += 4) {
             $hashHex .= dechex(bindec(substr($hashBits, $i, 4)));
@@ -81,7 +84,7 @@ class ImageHashing implements Hashing
         if (strlen($hash1) !== strlen($hash2)) {
             throw new Exception('Hash lengths must be equal.');
         }
-
+        //compare each character of the two hashes and increment distance if they are different
         $distance = 0;
         for ($i = 0; $i < strlen($hash1); $i++) {
             if ($hash1[$i] !== $hash2[$i]) {

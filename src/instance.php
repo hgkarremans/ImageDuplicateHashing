@@ -27,26 +27,26 @@ $hashWatermarkD = $tester->generateDHash('../assets/randomhouse_watermark.png');
 $hashPikachuD = $tester->generateDHash('../assets/pikachu.jpeg');
 
 try {
-    $noDifference = $tester->PhammingDistance($hash, $hash);
-    $differenceSmall = $tester->PhammingDistance($hash, $hash2);
-    $differenceBig = $tester->PhammingDistance($hash, $hash3);
-    $differenceCropped = $tester->PhammingDistance($hash3, $hashCropped);
-    $differenceLessCropped = $tester->PhammingDistance($hash3, $hashLessCropped);
-    $differenceColor = $tester->PhammingDistance($hash3, $hashColorDifferent);
-    $differenceWatermark = $tester->PhammingDistance($hash3, $hashWatermark);
-    $differencePikachu = $tester->PhammingDistance($hash3, $hashPikachu);
+    $noDifference = $tester->hammingDistance($hash, $hash);
+    $differenceSmall = $tester->hammingDistance($hash, $hash2);
+    $differenceBig = $tester->hammingDistance($hash, $hash3);
+    $differenceCropped = $tester->hammingDistance($hash3, $hashCropped);
+    $differenceLessCropped = $tester->hammingDistance($hash3, $hashLessCropped);
+    $differenceColor = $tester->hammingDistance($hash3, $hashColorDifferent);
+    $differenceWatermark = $tester->hammingDistance($hash3, $hashWatermark);
+    $differencePikachu = $tester->hammingDistance($hash3, $hashPikachu);
 } catch (Exception $e) {
     echo $e->getMessage();
 }
 try {
-    $noDifferenceD = $tester->DhammingDistance($hashD, $hashD);
-    $differenceSmallD = $tester->DhammingDistance($hashD, $hash2D);
-    $differenceBigD = $tester->DhammingDistance($hashD, $hash3D);
-    $differenceCroppedD = $tester->DhammingDistance($hash3D, $hashCroppedD);
-    $differenceLessCroppedD = $tester->DhammingDistance($hash3D, $hashLessCroppedD);
-    $differenceColorD = $tester->DhammingDistance($hash3D, $hashColorDifferentD);
-    $differenceWatermarkD = $tester->DhammingDistance($hash3D, $hashWatermarkD);
-    $differencePikachuD = $tester->DhammingDistance($hash3D, $hashPikachuD);
+    $noDifferenceD = $tester->hammingDistance($hashD, $hashD);
+    $differenceSmallD = $tester->hammingDistance($hashD, $hash2D);
+    $differenceBigD = $tester->hammingDistance($hashD, $hash3D);
+    $differenceCroppedD = $tester->hammingDistance($hash3D, $hashCroppedD);
+    $differenceLessCroppedD = $tester->hammingDistance($hash3D, $hashLessCroppedD);
+    $differenceColorD = $tester->hammingDistance($hash3D, $hashColorDifferentD);
+    $differenceWatermarkD = $tester->hammingDistance($hash3D, $hashWatermarkD);
+    $differencePikachuD = $tester->hammingDistance($hash3D, $hashPikachuD);
 } catch (Exception $e) {
     echo $e->getMessage();
 }
