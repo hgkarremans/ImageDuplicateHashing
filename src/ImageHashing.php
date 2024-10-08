@@ -62,7 +62,7 @@ class ImageHashing implements Hashing
         $img = imagecreatefromstring(file_get_contents($imagePath));
         $size = 32;
         //resizing
-        //no alot of upsides to resizing to 32x32
+        //not alot of upsides to resizing to 32x32
         $resizedImg = imagecreatetruecolor($size, $size);
         imagecopyresampled($resizedImg, $img, 0, 0, 0, 0, $size, $size, imagesx($img), imagesy($img));
 
